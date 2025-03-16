@@ -43,8 +43,10 @@ migrate = Migrate(app, db)
 
 @app.route("/")
 def home():
+    # 1. Ostatnio znalezione
+    
 
-    # 1. 3 najnowsze posty
+    # 2. 3 najnowsze posty
     three_latest_posts = Posts.query.order_by(Posts.post_datetime.desc()).filter(Posts.is_deleted == 'FALSE').limit(3)
     
     for post in three_latest_posts:
@@ -73,37 +75,37 @@ def home():
         
         post.description = bleach.clean(post.description, tags={'p','strong','em','s'}, strip=True)
 
-        # 2. Nasi Seniorzy
-        seniors = db.session.query(
-            Animals.animal_id,
-            Animals.name,
-            Animals.sex,
-            Animals.age,
-            Animals.weight,
-            Animals.number,
-            Animals.box,
-            Animals.title_img_name
-        ).filter(
-            Animals.in_shelter == True,
-            Animals.is_deleted == False,
-            Animals.date_of_birth <= datetime.now() - timedelta(days=10*365.25)
-        ).all()
+    # 3. Nasi Seniorzy
+    seniors = db.session.query(
+        Animals.animal_id,
+        Animals.name,
+        Animals.sex,
+        Animals.age,
+        Animals.weight,
+        Animals.number,
+        Animals.box,
+        Animals.title_img_name
+    ).filter(
+        Animals.in_shelter == True,
+        Animals.is_deleted == False,
+        Animals.date_of_birth <= datetime.now() - timedelta(days=10*365.25)
+    ).all()
 
-        # 3. Schronisko w liczbach
-        in_schelter = Animals.query.filter(
-            Animals.in_shelter == True,
-            Animals.is_deleted == False
-        ).count()
+    # 4. Schronisko w liczbach
+    in_schelter = Animals.query.filter(
+        Animals.in_shelter == True,
+        Animals.is_deleted == False
+    ).count()
 
-        arrived_in_current_month = Animals.query.filter(
-            Animals.date_on > f"{datetime.now().year}-{datetime.now().month}-01",
-            Animals.is_deleted == False
-        ).count()
+    arrived_in_current_month = Animals.query.filter(
+        Animals.date_on > f"{datetime.now().year}-{datetime.now().month}-01",
+        Animals.is_deleted == False
+    ).count()
 
-        found_home = Animals.query.filter(
-            Animals.in_shelter == False,
-            Animals.is_deleted == False
-        ).count()
+    found_home = Animals.query.filter(
+        Animals.in_shelter == False,
+        Animals.is_deleted == False
+    ).count()
 
     return render_template(
         "home.html", 
