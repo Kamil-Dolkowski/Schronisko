@@ -542,16 +542,398 @@ def restore_animal(id):
 
     return redirect(url_for('deleted_animals'))
 
-#===========================INFO==============================
+#===========================JAK POMOC==============================
+
+#Jak pomoc - menu
+@app.route("/jakpomoc")
+def how_to_help():
+    return render_template("how_to_help/how_to_help.html", how_to_help=how_to_help)
+
+#wolontariat - wyswietl
+@app.route("/wolontariat")
+def volunteering():
+    volunteering = Pages.query.filter(Pages.page_category == 'wolontariat').first()
+    if volunteering is None:
+        init_volunteering = Pages()
+        init_volunteering.title = 'Wolontariat'
+        init_volunteering.description = ''
+        init_volunteering.page_category = 'wolontariat'
+        db.session.add(init_volunteering)
+        db.session.commit()
+        volunteering = Pages.query.filter(Pages.page_category == 'wolontariat').first()
+
+    return render_template("how_to_help/volunteering.html", volunteering = volunteering)
+
+#wolontariat - edycja
+@app.route("/wolontariat/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_volunteering():
+
+    volunteering = Pages.query.filter(Pages.page_category == 'wolontariat').first()
+
+    form = PagesForm(obj=volunteering)
+
+    if form.validate_on_submit():
+
+        volunteering.description = form.description.data
+
+        db.session.add(volunteering)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('volunteering'))     
+    
+    form.description.data = volunteering.description    
+
+    return render_template('how_to_help/edit_volunteering.html', form=form)
+
+#darowizny rzeczowe - podglad
+@app.route("/darowiznyrz")
+def in_kind_donations():
+    in_kind_donations = Pages.query.filter(Pages.page_category == 'darowiznyrz').first()
+    if in_kind_donations is None:
+        init_in_kind_donations = Pages()
+        init_in_kind_donations.title = 'Darowizny Rzeczowe'
+        init_in_kind_donations.description = ''
+        init_in_kind_donations.page_category = 'darowiznyrz'
+        db.session.add(init_in_kind_donations)
+        db.session.commit()
+        in_kind_donations = Pages.query.filter(Pages.page_category == 'darowiznyrz').first()
+
+    return render_template("how_to_help/in_kind_donations.html", in_kind_donations = in_kind_donations)
+
+
+#darowizny rzeczowe - edycja
+@app.route("/darowiznyrz/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_in_kind_donations():
+
+    in_kind_donations = Pages.query.filter(Pages.page_category == 'darowiznyrz').first()
+
+    form = PagesForm(obj=in_kind_donations)
+
+    if form.validate_on_submit():
+
+        in_kind_donations.description = form.description.data
+
+        db.session.add(in_kind_donations)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('in_kind_donations'))     
+    
+    form.description.data = in_kind_donations.description    
+
+    return render_template('how_to_help/edit_in_kind_donations.html', form=form)
 
 
 
+#darowizny finansowe - podglad
+@app.route("/darowiznyf")
+def financial_donations():
+    financial_donations = Pages.query.filter(Pages.page_category == 'darowiznyf').first()
+    if financial_donations is None:
+        init_financial_donations = Pages()
+        init_financial_donations.title = 'Darowizny Rzeczowe'
+        init_financial_donations.description = ''
+        init_financial_donations.page_category = 'darowiznyf'
+        db.session.add(init_financial_donations)
+        db.session.commit()
+        financial_donations = Pages.query.filter(Pages.page_category == 'darowiznyf').first()
+
+    return render_template("how_to_help/financial_donations.html", financial_donations = financial_donations)
+
+
+#darowizny finansowe - edycja
+@app.route("/darowiznyf/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_financial_donations():
+
+    financial_donations = Pages.query.filter(Pages.page_category == 'darowiznyf').first()
+
+    form = PagesForm(obj=financial_donations)
+
+    if form.validate_on_submit():
+
+        financial_donations.description = form.description.data
+
+        db.session.add(financial_donations)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('financial_donations'))     
+    
+    form.description.data = financial_donations.description    
+
+    return render_template('how_to_help/edit_financial_donations.html', form=form)
+
+#===========================BAZA WIEDZY========================
+
+#Baza wiedzy - menu
+@app.route("/bazawiedzy")
+def base_of_knowledge():
+    return render_template("base_of_knowledge/base_of_knowledge.html", base_of_knowledge=base_of_knowledge)
+
+#procedura adopcyjna - wyswietlanie
+@app.route("/proceduraadopcyjna")
+def adoption_procedure():
+    adoption_procedure = Pages.query.filter(Pages.page_category == 'proceduraadopcyjna').first()
+    if adoption_procedure is None:
+        init_adoption_procedure = Pages()
+        init_adoption_procedure.title = 'Procedura adopcyjna'
+        init_adoption_procedure.description = ''
+        init_adoption_procedure.page_category = 'proceduraadopcyjna'
+        db.session.add(init_adoption_procedure)
+        db.session.commit()
+        adoption_procedure = Pages.query.filter(Pages.page_category == 'proceduraadopcyjna').first()
+
+    return render_template("base_of_knowledge/adoption_procedure.html", adoption_procedure = adoption_procedure)
+
+
+#procedura adopcyjna - edycja
+@app.route("/proceduraadopcyjna/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_adoption_procedure():
+
+    adoption_procedure = Pages.query.filter(Pages.page_category == 'proceduraadopcyjna').first()
+
+    form = PagesForm(obj=adoption_procedure)
+
+    if form.validate_on_submit():
+
+        adoption_procedure.description = form.description.data
+
+        db.session.add(adoption_procedure)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('adoption_procedure'))     
+    
+    form.description.data = adoption_procedure.description    
+
+    return render_template('base_of_knowledge/edit_adoption_procedure.html', form=form)
+
+
+
+#po adopcji - wyswietlanie
+@app.route("/poadopcji")
+def after_adoption():
+    after_adoption = Pages.query.filter(Pages.page_category == 'poadopcji').first()
+    if after_adoption is None:
+        init_after_adoption = Pages()
+        init_after_adoption.title = 'Po adopcji'
+        init_after_adoption.description = ''
+        init_after_adoption.page_category = 'poadopcji'
+        db.session.add(init_after_adoption)
+        db.session.commit()
+        after_adoption = Pages.query.filter(Pages.page_category == 'poadopcji').first()
+
+    return render_template("base_of_knowledge/after_adoption.html", after_adoption = after_adoption)
+
+
+#po adopcji - edycja
+@app.route("/poadopcji/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_after_adoption():
+
+    after_adopion = Pages.query.filter(Pages.page_category == 'poadopcji').first()
+
+    form = PagesForm(obj=after_adopion)
+
+    if form.validate_on_submit():
+
+        after_adopion.description = form.description.data
+
+        db.session.add(after_adopion)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('after_adoption'))     
+    
+    form.description.data = after_adopion.description    
+
+    return render_template('base_of_knowledge/edit_after_adoption.html', form=form)
+
+
+
+#FAQ - podglad
+@app.route("/FAQ")
+def FAQ():
+    FAQ = Pages.query.filter(Pages.page_category == 'faq').first()
+    if FAQ is None:
+        init_FAQ = Pages()
+        init_FAQ.title = 'FAQ'
+        init_FAQ.description = ''
+        init_FAQ.page_category = 'faq'
+        db.session.add(init_FAQ)
+        db.session.commit()
+        FAQ = Pages.query.filter(Pages.page_category == 'faq').first()
+
+    return render_template("base_of_knowledge/FAQ.html", FAQ = FAQ)
+
+
+#FAQ - edycja
+@app.route("/FAQ/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_FAQ():
+
+    FAQ = Pages.query.filter(Pages.page_category == 'faq').first()
+
+    form = PagesForm(obj=FAQ)
+
+    if form.validate_on_submit():
+
+        FAQ.description = form.description.data
+
+        db.session.add(FAQ)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('FAQ'))     
+    
+    form.description.data = FAQ.description    
+
+    return render_template('base_of_knowledge/edit_FAQ.html', form=form)
+#==========================WSPOLPRACA=========================
+
+#Wspolpraca - menu
+@app.route("/wspolpraca")
+def collaboration():
+    return render_template("collaboration/collaboration.html", collaboration=collaboration)
+
+#Dla szkol - wyswietlanie
+@app.route("/dlaszkol")
+def for_schools():
+    for_schools = Pages.query.filter(Pages.page_category == 'dlaszkol').first()
+    if for_schools is None:
+        init_for_schools = Pages()
+        init_for_schools.title = 'Dla szkol'
+        init_for_schools.description = ''
+        init_for_schools.page_category = 'dlaszkol'
+        db.session.add(init_for_schools)
+        db.session.commit()
+        for_schools = Pages.query.filter(Pages.page_category == 'dlaszkol').first()
+
+    return render_template("collaboration/for_schools.html", for_schools = for_schools)
+
+
+#Dla szkol - edycja
+@app.route("/dlaszkol/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_for_schools():
+
+    for_schools = Pages.query.filter(Pages.page_category == 'dlaszkol').first()
+
+    form = PagesForm(obj=for_schools)
+
+    if form.validate_on_submit():
+
+        for_schools.description = form.description.data
+
+        db.session.add(for_schools)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('for_schools'))     
+    
+    form.description.data = for_schools.description    
+
+    return render_template('collaboration/edit_for_schools.html', form=form)
+
+
+#Dla samorzadow - wyswietlanie
+@app.route("/dlasamorzadow")
+def for_local_government():
+    for_local_government = Pages.query.filter(Pages.page_category == 'dlasamorzadow').first()
+    if for_local_government is None:
+        init_for_local_government = Pages()
+        init_for_local_government.title = 'Dla samorzadow'
+        init_for_local_government.description = ''
+        init_for_local_government.page_category = 'dlasamorzadow'
+        db.session.add(init_for_local_government)
+        db.session.commit()
+        for_local_government = Pages.query.filter(Pages.page_category == 'dlasamorzadow').first()
+
+    return render_template("collaboration/for_local_government.html", for_local_government = for_local_government)
+
+
+#Dla samorzadow - edycja
+@app.route("/dlasamorzadow/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_for_local_government():
+
+    for_local_government = Pages.query.filter(Pages.page_category == 'dlasamorzadow').first()
+
+    form = PagesForm(obj=for_local_government)
+
+    if form.validate_on_submit():
+
+        for_local_government.description = form.description.data
+
+        db.session.add(for_local_government)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('for_local_government'))     
+    
+    form.description.data = for_local_government.description    
+
+    return render_template('collaboration/edit_for_local_government.html', form=form)
+
+
+#Dla firm - wyswietlanie
+@app.route("/dlafirm")
+def for_firms():
+    for_firms = Pages.query.filter(Pages.page_category == 'dlafirm').first()
+    if for_firms is None:
+        init_for_firms = Pages()
+        init_for_firms.title = 'Dla firm'
+        init_for_firms.description = ''
+        init_for_firms.page_category = 'dlafirm'
+        db.session.add(init_for_firms)
+        db.session.commit()
+        for_firms = Pages.query.filter(Pages.page_category == 'dlafirm').first()
+
+    return render_template("collaboration/for_firms.html", for_firms = for_firms)
+
+
+#Dla firm - edycja
+@app.route("/dlafirm/edycja", methods=['GET', 'POST'])
+@login_required
+def edit_for_firms():
+
+    for_firms = Pages.query.filter(Pages.page_category == 'dlafirm').first()
+
+    form = PagesForm(obj=for_firms)
+
+    if form.validate_on_submit():
+
+        for_firms.description = form.description.data
+
+        db.session.add(for_firms)
+        db.session.commit()
+        flash("Zapisano zmiany!")
+
+        return redirect(url_for('for_firms'))     
+    
+    form.description.data = for_firms.description    
+
+    return render_template('collaboration/edit_for_firms.html', form=form)
 #==========================KONTAKT============================
 
 # Kontakt - podglad tresci
 @app.route("/kontakt")
 def contact():
-    contact = Pages.query.get_or_404(1)
+    contact = Pages.query.filter(Pages.page_category == 'kontakt').first()
+    if contact is None:
+        init_contact = Pages()
+        init_contact.title = 'Kontakt'
+        init_contact.description = ''
+        init_contact.page_category = 'kontakt'
+        db.session.add(init_contact)
+        db.session.commit()
+        contact = Pages.query.filter(Pages.page_category == 'kontakt').first()
+
     return render_template("contact/contact.html", contact=contact)
 
 # Kontakt - edycja tresci
@@ -559,22 +941,12 @@ def contact():
 @login_required
 def edit_contact():
 
-    entry = Pages.query.get(1)
-
-    if entry is None:
-        init_contact = Pages()
-        init_contact.page_id = 1
-        init_contact.title = 'Kontakt'
-        init_contact.description = ''
-        db.session.add(init_contact)
-        db.session.commit()
-        entry = Pages.query.get(1)
+    entry = Pages.query.filter(Pages.page_category == 'kontakt').first()
 
     form = PagesForm(obj=entry)
 
     if form.validate_on_submit():
 
-        entry.title = 'Kontakt'
         entry.description = form.description.data
 
         db.session.add(entry)

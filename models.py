@@ -77,6 +77,7 @@ class Posts(db.Model):
 
 class Pages(db.Model):
     page_id = db.Column(db.Integer, primary_key=True)
+    page_category = db.Column(db.String(100), nullable=False)
     title = db.Column(db.String(100), nullable=False)
     description = db.Column(db.Text, nullable=False)
     title_img_name = db.Column(db.String(255))

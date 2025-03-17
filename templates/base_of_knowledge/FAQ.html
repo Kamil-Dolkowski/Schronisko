@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/base_of_knowledge.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<h1>FAQ</h1>
+
+<div class="info-box">
+    {{ FAQ.description|safe }}
+</div>
+
+{% if current_user.is_authenticated %}
+<a class="misc-info" href="/FAQ/edycja">Edytuj</a> 
+{% endif %}
+
+{% endblock %}
+
