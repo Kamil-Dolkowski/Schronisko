@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animals.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>Jak pomóc</h1>
+
+<br/>
+<div class="animals-grid">
+    <a href="{{ url_for('volunteering') }}">Wolontariat</a>
+    <a href="{{ url_for('in_kind_donations') }}">Darowizny rzeczowe</a>
+    <a href="{{ url_for('financial_donations') }}">Darowizny finansowe</a>
+</div>
+
+<!-- {% if current_user.is_authenticated %}
+<div class="animals-grid">
+    <a href="{{ url_for('add_animal') }}">Dodaj zwierzę</a>
+    <a href="{{ url_for('deleted_animals') }}">Usunięte Zwierzęta</a>
+</div>
+{% endif %} -->
+
+{% endblock %}

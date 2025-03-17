@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/animals.css') }}">
+{% endblock %}
+
+{% block body %}
+<h1>Współpraca</h1>
+
+<br/>
+<div class="animals-grid">
+    <a href="{{ url_for('for_schools') }}">Dla szkół</a>
+    <a href="{{ url_for('for_local_government') }}">Dla Samorządów</a>
+    <a href="{{ url_for('for_firms') }}">Dla Firm</a>
+</div>
+
+{% endblock %}

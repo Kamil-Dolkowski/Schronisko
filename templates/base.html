@@ -62,30 +62,30 @@
                 </li>
                 <li><a href="#">Dokumenty</a></li>
                 <li>
-                    <a href="#">Jak pomóc</a>
+                    <a href="{{ url_for('how_to_help') }}">Jak pomóc</a>
                     <button class="submenu-toggle">+</button>
                     <ul>
-                        <li><a href="#">Wolontariat</a></li>
-                        <li><a href="#">Darowizny rzeczowe</a></li>
-                        <li><a href="#">Darowizny finansowe</a></li>
+                        <li><a href="{{ url_for('volunteering') }}">Wolontariat</a></li>
+                        <li><a href="{{ url_for('in_kind_donations') }}">Darowizny rzeczowe</a></li>
+                        <li><a href="{{ url_for('financial_donations') }}">Darowizny finansowe</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ url_for('pages') }}">Baza wiedzy</a>
+                    <a href="{{ url_for('base_of_knowledge') }}">Baza wiedzy</a>
                     <button class="submenu-toggle">+</button>
                     <ul>
-                        <li><a href="#">Procedura adopcyjna</a></li>
-                        <li><a href="#">Po adopcji</a></li>
-                        <li><a href="#">FAQ</a></li>
+                        <li><a href="{{ url_for('adoption_procedure') }}">Procedura adopcyjna</a></li>
+                        <li><a href="{{ url_for('after_adoption') }}">Po adopcji</a></li>
+                        <li><a href="{{ url_for('FAQ') }}">FAQ</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Współpraca</a>
+                    <a href="{{ url_for('collaboration') }}">Współpraca</a>
                     <button class="submenu-toggle">+</button>
                     <ul>
-                        <li><a href="#">Dla szkół</a></li>
-                        <li><a href="#">Dla Samorządów</a></li>
-                        <li><a href="#">Dla firm</a></li>
+                        <li><a href="{{ url_for('for_schools') }}">Dla szkół</a></li>
+                        <li><a href="{{ url_for('for_local_government') }}">Dla samorządów</a></li>
+                        <li><a href="{{ url_for('for_firms') }}">Dla firm</a></li>
                     </ul>
                 </li>
                 <li><a href="{{ url_for('contact') }}">Kontakt</a></li>

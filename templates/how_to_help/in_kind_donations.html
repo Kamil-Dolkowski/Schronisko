@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/how_to_help.css') }}">
+{% endblock %}
+
+{% block body %}
+
+<h1>Darowizny rzeczowe</h1>
+
+<div class="info-box">
+    {{ in_kind_donations.description|safe }}
+</div>
+
+{% if current_user.is_authenticated %}
+<a class="misc-info" href="/darowiznyrz/edycja">Edytuj</a> 
+{% endif %}
+
+{% endblock %}
+
