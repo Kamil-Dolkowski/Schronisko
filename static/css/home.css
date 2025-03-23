@@ -1,19 +1,19 @@
-#last-found
-{
-    min-height: 10vw;
-    text-align: center;
-    margin: 20px 0;
-    padding: 20px 0;
-}
-
 /*========================================= */
 /*========== Ostatnio znalezione ========== */
 /*========================================= */
 
+#last-found
+{
+    min-height: 10vw;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
 .slider
 {
     display: flex;
-    aspect-ratio: 16/9;
+    aspect-ratio: 16/11;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     scroll-behavior: smooth;
@@ -26,7 +26,7 @@
 .slider-wrapper
 {
     position: relative;
-    max-width: 48rem;
+    max-width: 50vw;
     margin: 0 auto;
 }
 
@@ -35,11 +35,19 @@
     display: none;
 }
 
-.slider img 
+.slider a
 {
     flex: 1 0 100%;
     scroll-snap-align: start;
     object-fit: cover;
+}
+
+.slider > a img 
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: top;
 }
 
 .slider-nav
@@ -80,7 +88,11 @@
     background-color: rgb(255, 255, 255);
     margin: 20px 0;
     padding: 20px 0;
+    background-image: url(/static/images/dog_footprint.png);
+    background-repeat: repeat;
+    background-size: 7%;
 }
+
 /*============================================ */
 /*=============== Nasi Seniorzy ============== */
 /*============================================ */
@@ -93,7 +105,6 @@
     padding: 20px 0;
 }
 
-
 /*======================================= */
 /*======== Schronisko w liczbach ======== */
 /*======================================= */
@@ -104,25 +115,71 @@
     text-align: center;
     margin: 20px 0;
     padding: 20px 0;
+    color: #e55e1a;
 }
 
-.info-block
+.shelter-in-numbers-info
 {
-    height: 400px;
-    margin: 1vw;
-    padding: 1vw;
-    background-color: rgba(70, 72, 114, 1);
-    background-image: linear-gradient(164deg, rgba(70, 72, 114, 1) 22%, rgba(77, 72, 92, 1) 72%);
-    border-radius: 4vw;
-    color: white;
+    background-image: url(/static/images/shelter.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .info-blocks-module
 {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 250px));
+    gap: 10px;
+    justify-content: center;
+}
+
+.info-blocks-animals-module
+{
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: grid;
+    grid-template-columns: 1fr 0.7fr 0.7fr;
     gap: 15px;
     justify-content: center;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    border-radius: 40px;
+}
+
+@media (max-width: 768px){
+
+    .info-blocks-animals-module
+    {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        justify-content: center;
+        /* background-color: gray; */
+        border-radius: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .info-blocks-animals-module .info-block:nth-child(1) {
+        grid-column: span 2; /* Pierwszy div rozciąga się na obie kolumny */
+    }
+
+}
+
+.info-block
+{
+    height: 230px;
+    margin: 1vw;
+    /* padding: 1vw; */
+    background-color: rgba(255, 255, 255, 0.7);
+    /* background-image: linear-gradient(164deg, rgba(70, 72, 114, 1) 22%, rgba(77, 72, 92, 1) 72%); */
+    border-radius: 40px;
+    color: #e55e1a;
 }
 
 .info-block-img
@@ -139,8 +196,8 @@
 
 .info-block-number
 {
-    height: 40%;
-    font-size: 100px;
+    height: 25%;
+    font-size: 50px;
     margin: 0;
 }
 
@@ -151,8 +208,9 @@
     font-size: larger;
     font-weight: 600;
     text-align: center;
-    color: white;
+    color: #383641;
 }
+
 /* orange: #e55e1a */
 /* grey: #4d485c */
 /* white:  #ffffff */
