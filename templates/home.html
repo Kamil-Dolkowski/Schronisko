@@ -8,17 +8,19 @@
 
 {% block body %}
 <div id="last-found">
-    <h1>OSTATNIO ZNALEZIONE</h1>
+    <h1>OSTATNIO TRAFIŁY</h1>
     <div class = "slider-wrapper">
         <div class="slider">
-            <img id="slajd1" src="static/images/pies1.jpg"/>
-            <img id="slajd2" src="static/images/pies2.avif"/>
-            <img id="slajd3" src="static/images/pies3.jpg"/>
+            {% for animal in three_recently_arrived %}
+            <a href="{{ url_for('animal', id = animal.animal_id) }}">
+                <img src="{{ url_for('static', filename='uploads/animals/' + animal.animal_id |string + '/' + animal.title_img_name) }}"/>
+            </a>
+            {% endfor %}
         </div>
         <div class="slider-nav">
-            <a href="#slajd1"></a>
-            <a href="#slajd2"></a>
-            <a href="#slajd3"></a>
+            {% for animal in three_recently_arrived %}
+            <a href="#slajd"></a>
+            {% endfor %}
         </div>
     </div>
 </div>
@@ -53,7 +55,7 @@
 
     {% endfor %}
 
-    <a href="{{ url_for('posts') }}">Więcej</a>
+    <a class="misc-post" href="{{ url_for('posts') }}">Więcej</a>
 </div>
 <div id="our-seniors">
     <h1>NASI SENIORZY</h1>
@@ -85,38 +87,79 @@
 </div>
 <div id="shelter-in-numbers">
     <h1>SCHRONISKO W LICZBACH</h1>
-    <div class="info-blocks-module">
-        <div class="info-block">
-            <div class="info-block-img">
-                <img src="/static/images/logo.png" alt="Ikona psa"/>
+
+    <div class="shelter-in-numbers-info">
+        <div class="info-blocks-animals-module">
+            <div class="info-block">
+                <div class="info-block-img">
+                    <img src="/static/images/logo.png"/>
+                </div>
+                <div class="info-block-number">
+                    {{ in_schelter }}
+                </div>
+                <div class="info-block-text">
+                    Zwierzęta w schronisku
+                </div>
             </div>
-            <div class="info-block-number">
-                {{ in_schelter }}
-            </div>
-            <div class="info-block-text">
-                Zwierzęta w schronisku
-            </div>
+            
+                <div class="info-block">
+                    <div class="info-block-img">
+                        <img src="/static/images/logo.png"/>
+                    </div>
+                    <div class="info-block-number">
+                        {{ dogs }}
+                    </div>
+                    <div class="info-block-text">
+                        Psy
+                    </div>
+                </div>
+
+                <div class="info-block">
+                    <div class="info-block-img">
+                        <img src="/static/images/logo.png"/>
+                    </div>
+                    <div class="info-block-number">
+                        {{ cats }}
+                    </div>
+                    <div class="info-block-text">
+                        Koty
+                    </div>
+                </div>
+            
         </div>
-        <div class="info-block">
-            <div class="info-block-img">
-                <img src="/static/images/logo.png" alt="Ikona psa"/>
+        <div class="info-blocks-module">
+            <div class="info-block">
+                <div class="info-block-img">
+                    <img src="/static/images/logo.png"/>
+                </div>
+                <div class="info-block-number">
+                    {{ arrived }}
+                </div>
+                <div class="info-block-text">
+                    Trafiło do schroniska
+                </div>
             </div>
-            <div class="info-block-number">
-                {{ arrived_in_current_month }}
+            <div class="info-block">
+                <div class="info-block-img">
+                    <img src="/static/images/logo.png"/>
+                </div>
+                <div class="info-block-number">
+                    {{ adoption }}
+                </div>
+                <div class="info-block-text">
+                    Trafiło do adopcji
+                </div>
             </div>
-            <div class="info-block-text">
-                Trafiło w tym miesiącu
-            </div>
-        </div>
-        <div class="info-block">
-            <div class="info-block-img">
-                <img src="/static/images/logo.png" alt="Ikona psa"/>
-            </div>
-            <div class="info-block-number">
-                {{ found_home }}
-            </div>
-            <div class="info-block-text">
-                Znalazło dom
+            <div class="info-block">
+                <div class="info-block-img">
+                    <img src="/static/images/logo.png"/>
+                </div>
+                <div class="info-block-number">
+                    {{ back_home }}
+                </div>
+                <div class="info-block-text">
+                    Wróciło do domu
+                </div>
             </div>
         </div>
     </div>
@@ -124,7 +167,7 @@
 
 <script>
     const slider = document.querySelector('.slider');
-    const images = document.querySelectorAll('.slider img');
+    const images = document.querySelectorAll('.slider > a img');
     let index = 0;
 
     function nextSlide() {
