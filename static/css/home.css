@@ -123,6 +123,8 @@
     background-image: url(/static/images/shelter.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    padding-top: 60px;
+    padding-bottom: 60px;
 }
 
 .info-blocks-module
