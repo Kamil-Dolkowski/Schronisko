@@ -1,5 +1,5 @@
-from common_imports import *
-from webforms import LoginForm, UserForm
+from backend.pages_modules.common_imports import *
+from backend.webforms import LoginForm, UserForm
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user
 from flask import request

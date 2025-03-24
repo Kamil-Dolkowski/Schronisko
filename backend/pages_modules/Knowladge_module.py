@@ -1,5 +1,5 @@
-from common_imports import *
-from webforms import PagesForm
+from backend.pages_modules.common_imports import *
+from backend.webforms import PagesForm
 
 def adoption_procedure():
     adoption_procedure = Pages.query.filter(Pages.page_category == 'proceduraadopcyjna').first()

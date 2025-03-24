@@ -1,5 +1,5 @@
-from common_imports import *
-from webforms import PagesForm
+from backend.pages_modules.common_imports import *
+from backend.webforms import PagesForm
 
 def volunteering():
     volunteering = Pages.query.filter(Pages.page_category == 'wolontariat').first()

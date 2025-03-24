@@ -1,5 +1,5 @@
-from common_imports import *
-from webforms import PostForm
+from backend.pages_modules.common_imports import *
+from backend.webforms import PostForm
 from werkzeug.utils import secure_filename
 import uuid
 from flask_login import current_user

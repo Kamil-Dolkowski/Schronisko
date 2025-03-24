@@ -1,6 +1,6 @@
-from common_imports import *
+from backend.pages_modules.common_imports import *
 import os
-from webforms import AnimalMigrateForm, AnimalForm
+from backend.webforms import AnimalMigrateForm, AnimalForm
 from werkzeug.utils import secure_filename
 import uuid
 

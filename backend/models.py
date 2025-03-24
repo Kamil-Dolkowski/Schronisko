@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
-from app import app, datetime, UserMixin, generate_password_hash, check_password_hash
+from app import app, UserMixin
+from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 db = SQLAlchemy(app)
 

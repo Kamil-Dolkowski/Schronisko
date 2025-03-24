@@ -1,4 +1,4 @@
-from common_imports import *
+from backend.pages_modules.common_imports import *
 
 def home():
     three_latest_posts = Posts.query.order_by(Posts.post_datetime.desc()).filter(Posts.is_deleted == 'FALSE').limit(3)
