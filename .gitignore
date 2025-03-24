@@ -1,5 +1,5 @@
 # Ignorowanie katalogów:
-/__pycache__/
+__pycache__/
 /env/
 /migrations/
 /static/uploads/
