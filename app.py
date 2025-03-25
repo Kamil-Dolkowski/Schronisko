@@ -66,7 +66,7 @@ def edit_post(id):
     return News_module.edit_post(id)
 
 # Usuwanie posta
-@app.route("/aktualnosci/usuwanie-posta/<int:id>")
+@app.route("/aktualnosci/usun-post/<int:id>")
 @login_required
 def delete_post(id):
     post_to_delete = Posts.query.get_or_404(id)
@@ -138,7 +138,7 @@ def restore_animal(id):
 #===========================JAK POMOC==============================
 
 #Jak pomoc - menu
-@app.route("/jakpomoc")
+@app.route("/jak-pomoc")
 def how_to_help():
     return render_template("how_to_help/how_to_help.html", how_to_help=how_to_help)
 
@@ -154,23 +154,23 @@ def edit_volunteering():
     return Help_module.edit_volunteering()
 
 #darowizny rzeczowe - podglad
-@app.route("/darowiznyrz")
+@app.route("/darowizny-rzeczowe")
 def in_kind_donations():
     return Help_module.in_kind_donations()
 
 #darowizny rzeczowe - edycja
-@app.route("/darowiznyrz/edycja", methods=['GET', 'POST'])
+@app.route("/darowizny-rzeczowe/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_in_kind_donations():
     return Help_module.edit_in_kind_donations()
 
 #darowizny finansowe - podglad
-@app.route("/darowiznyf")
+@app.route("/darowizny-finansowe")
 def financial_donations():
     return Help_module.financial_donations()
 
 #darowizny finansowe - edycja
-@app.route("/darowiznyf/edycja", methods=['GET', 'POST'])
+@app.route("/darowizny-finansow/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_financial_donations():
     return Help_module.edit_financial_donations()
@@ -178,28 +178,28 @@ def edit_financial_donations():
 #===========================BAZA WIEDZY========================
 
 #Baza wiedzy - menu
-@app.route("/bazawiedzy")
+@app.route("/baza-wiedzy")
 def base_of_knowledge():
     return render_template("base_of_knowledge/base_of_knowledge.html", base_of_knowledge=base_of_knowledge)
 
 #procedura adopcyjna - wyswietlanie
-@app.route("/proceduraadopcyjna")
+@app.route("/procedura-adopcyjna")
 def adoption_procedure():
     return Knowladge_module.adoption_procedure()
 
 #procedura adopcyjna - edycja
-@app.route("/proceduraadopcyjna/edycja", methods=['GET', 'POST'])
+@app.route("/procedura-adopcyjna/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_adoption_procedure():
     return Knowladge_module.edit_adoption_procedure()
 
 #po adopcji - wyswietlanie
-@app.route("/poadopcji")
+@app.route("/po-adopcji")
 def after_adoption():
     return Knowladge_module.after_adoption()
 
 #po adopcji - edycja
-@app.route("/poadopcji/edycja", methods=['GET', 'POST'])
+@app.route("/po-adopcji/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_after_adoption():
     return Knowladge_module.edit_after_adoption()
@@ -223,34 +223,34 @@ def collaboration():
     return render_template("collaboration/collaboration.html", collaboration=collaboration)
 
 #Dla szkol - wyswietlanie
-@app.route("/dlaszkol")
+@app.route("/dla-szkol")
 def for_schools():
     return Colaboration_module.for_schools()
 
 #Dla szkol - edycja
-@app.route("/dlaszkol/edycja", methods=['GET', 'POST'])
+@app.route("/dla-szkol/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_for_schools():
     return Colaboration_module.edit_for_schools()
 
 #Dla samorzadow - wyswietlanie
-@app.route("/dlasamorzadow")
+@app.route("/dla-samorzadow")
 def for_local_government():
     return Colaboration_module.for_local_government()
 
 #Dla samorzadow - edycja
-@app.route("/dlasamorzadow/edycja", methods=['GET', 'POST'])
+@app.route("/dla-samorzadow/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_for_local_government():
     return Colaboration_module.edit_for_local_government()
 
 #Dla firm - wyswietlanie
-@app.route("/dlafirm")
+@app.route("/dla-firm")
 def for_firms():
     return Colaboration_module.for_firms()
 
 #Dla firm - edycja
-@app.route("/dlafirm/edycja", methods=['GET', 'POST'])
+@app.route("/dla-firm/edycja", methods=['GET', 'POST'])
 @login_required
 def edit_for_firms():
     return Colaboration_module.edit_for_firms()
