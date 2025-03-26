@@ -4,7 +4,11 @@ from backend.webforms import AnimalMigrateForm, AnimalForm
 from werkzeug.utils import secure_filename
 import uuid
 
+ANIMALS_PER_PAGE = 12
+
 def deleted_animals():
+    page = request.args.get('page', 1, type=int)
+
     deleted_animals = db.session.query(
         Animals.animal_id,
         Animals.sex,
@@ -15,9 +19,11 @@ def deleted_animals():
         Animals.title_img_name
     ).filter(
         Animals.is_deleted == True
-    ).all()
+    )
+
+    animals_page = deleted_animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
     
-    return render_template("animals/deleted_animals.html", animals=deleted_animals)
+    return render_template("animals/deleted_animals.html", animals=animals_page, url_name='deleted_animals')
 
 def animal(id, upload_folder):
     animal = Animals.query.get_or_404(id)
@@ -74,6 +80,8 @@ def deleted_animal(id, upload_folder):
     return render_template("animals/deleted_animal.html", animal=animal, images=images)
 
 def recently_arrived():
+    page = request.args.get('page', 1, type=int)
+
     animals = db.session.query(
         Animals.animal_id,
         Animals.sex,
@@ -86,10 +94,15 @@ def recently_arrived():
         Animals.category_id == 1,
         Animals.in_shelter == True,
         Animals.is_deleted == False
-    ).all()
-    return render_template("animals/recently_arrived.html", animals=animals)
+    )
+
+    animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
+
+    return render_template("animals/recently_arrived.html", animals=animals_page, url_name='recently_arrived')
 
 def dogs_to_adoption():
+    page = request.args.get('page', 1, type=int)
+
     animals = db.session.query(
         Animals.animal_id,
         Animals.name,
@@ -104,10 +117,15 @@ def dogs_to_adoption():
         Animals.type_id == 1,
         Animals.in_shelter == True,
         Animals.is_deleted == False
-    ).all()
-    return render_template("animals/dogs_to_adoption.html", animals=animals)
+    )
+
+    animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
+
+    return render_template("animals/dogs_to_adoption.html", animals=animals_page, url_name='dogs_to_adoption')
 
 def cats_to_adoption():
+    page = request.args.get('page', 1, type=int)
+
     animals = db.session.query(
         Animals.animal_id,
         Animals.name,
@@ -122,10 +140,15 @@ def cats_to_adoption():
         Animals.type_id == 2,
         Animals.in_shelter == True,
         Animals.is_deleted == False
-    ).all()
-    return render_template("animals/cats_to_adoption.html", animals=animals)
+    )
+
+    animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
+
+    return render_template("animals/cats_to_adoption.html", animals=animals_page, url_name='cats_to_adoption')
 
 def found_home():
+    page = request.args.get('page', 1, type=int)
+
     animals = db.session.query(
         Animals.animal_id,
         Animals.name,
@@ -138,10 +161,13 @@ def found_home():
     ).filter(
         Animals.in_shelter == False,
         Animals.is_deleted == False
-    ).all()
-    return render_template("animals/found_home.html", animals=animals)
+    )
 
-def add_animal():
+    animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
+
+    return render_template("animals/found_home.html", animals=animals_page, url_name='found_home')
+
+def add_animal(upload_path):
     form = AnimalForm()
 
     types = Types.query.all()
@@ -189,7 +215,7 @@ def add_animal():
 
         # Zapisywanie plików 
         if form.title_img.data or any(img.filename for img in form.images.data):
-            catalog_path = os.path.join(app.config['UPLOAD_FOLDER'], 'animals', str(new_animal.animal_id))
+            catalog_path = os.path.join(upload_path, 'animals', str(new_animal.animal_id))
             os.makedirs(catalog_path, exist_ok=True)
 
             if form.title_img.data:
@@ -210,7 +236,7 @@ def add_animal():
 
     return render_template("animals/add_animal.html", form=form)
 
-def edit_animal(id):
+def edit_animal(id, upload_path):
     form = AnimalForm()
 
     animal = Animals.query.get_or_404(id)
@@ -258,7 +284,7 @@ def edit_animal(id):
 
         # Zapisywanie plików 
         if form.title_img.data or any(img.filename for img in form.images.data):
-            catalog_path = os.path.join(app.config['UPLOAD_FOLDER'], 'animals', str(animal.animal_id))
+            catalog_path = os.path.join(upload_path, 'animals', str(animal.animal_id))
             os.makedirs(catalog_path, exist_ok=True)
 
             if form.title_img.data:

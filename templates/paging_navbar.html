@@ -1,0 +1,46 @@
+<!-- Pasek nawigacji po stronach -->
+<div class="pages-nav">
+    <!-- przycisk "Poprzednia" (strona) -->
+    {% if animals.has_prev %}
+        <a href="{{ url_for(url_name, page=animals.prev_num) }}"
+            class="pages-nav-navigation-button">Poprzednia</a>
+    {% else %}
+        <div class="pages-nav-disabled-element">Poprzednia</div>
+    {% endif %}
+
+    <!-- nr strony: 1 -->
+    <a href="{{ url_for(url_name, page=1) }}" 
+        {% if animals.page == 1 %}class="pages-nav-current-page"{% endif %}>1</a>
+
+    <!-- (...) -->
+    {% if animals.page >= 5 %}
+        <div class="pages-nav-ellipsis">...</div>
+    {% endif %}
+
+    <!-- nr strony: od 2 do (n-1) -->
+    {% for i in range(animals.page-2, animals.page+2 +1) %}
+        {% if i > 1 and i < animals.pages %}
+            <a href="{{ url_for(url_name, page=i) }}"
+                {% if animals.page == i %}class="pages-nav-current-page"{% endif %}>{{ i }}</a>
+        {% endif %}
+    {% endfor %}
+
+    <!-- (...) -->
+    {% if animals.page <= animals.pages-4 %}
+        <div class="pages-nav-ellipsis">...</div>
+    {% endif %}
+
+    <!-- nr strony: n -->
+    {% if animals.pages != 1 %}
+    <a href="{{ url_for(url_name, page=animals.pages) }}"
+        {% if animals.page == animals.pages %}class="pages-nav-current-page"{% endif %}>{{ animals.pages }}</a>
+    {% endif %}
+
+    <!-- przycisk "Następna" (strona) -->
+    {% if animals.has_next %}
+        <a href="{{ url_for(url_name, page=animals.next_num) }}"
+            class="pages-nav-navigation-button">Następna</a>
+    {% else %}
+        <div class="pages-nav-disabled-element">Następna</div>
+    {% endif %}
+</div>
