@@ -118,12 +118,12 @@ def found_home():
 @app.route("/zwierzeta/dodaj-zwierze", methods=['GET', 'POST'])
 @login_required
 def add_animal():
-    return Animals_module.add_animal()
+    return Animals_module.add_animal(app.config['UPLOAD_FOLDER'])
 
 @app.route("/zwierzeta/edytuj-zwierze/<int:id>", methods=['GET', 'POST'])
 @login_required
 def edit_animal(id):
-    return Animals_module.edit_animal(id)
+    return Animals_module.edit_animal(id, app.config['UPLOAD_FOLDER'])
 
 @app.route("/zwierzeta/usun-zwierze/<int:id>", methods=['GET','POST'])
 @login_required

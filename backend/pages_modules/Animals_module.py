@@ -141,7 +141,7 @@ def found_home():
     ).all()
     return render_template("animals/found_home.html", animals=animals)
 
-def add_animal():
+def add_animal(upload_path):
     form = AnimalForm()
 
     types = Types.query.all()
@@ -189,7 +189,7 @@ def add_animal():
 
         # Zapisywanie plików 
         if form.title_img.data or any(img.filename for img in form.images.data):
-            catalog_path = os.path.join(app.config['UPLOAD_FOLDER'], 'animals', str(new_animal.animal_id))
+            catalog_path = os.path.join(upload_path, 'animals', str(new_animal.animal_id))
             os.makedirs(catalog_path, exist_ok=True)
 
             if form.title_img.data:
@@ -210,7 +210,7 @@ def add_animal():
 
     return render_template("animals/add_animal.html", form=form)
 
-def edit_animal(id):
+def edit_animal(id, upload_path):
     form = AnimalForm()
 
     animal = Animals.query.get_or_404(id)
@@ -235,22 +235,21 @@ def edit_animal(id):
         else:
             title_img_name = None
         
-        animal.category_id = form.category.data,
-        animal.in_shelter = True,
-        animal.name = form.name.data,
-        animal.type_id = form.type.data, 
-        animal.sex = form.sex.data,
-        animal.castration_sterilization = form.castration_sterilization.data,
-        animal.age = form.age.data,
-        animal.fur = form.fur.data,
-        animal.weight = form.weight.data,
-        animal.number = form.number.data,
-        animal.box = form.box.data,
-        animal.attitude_to_dogs = form.attitude_to_dogs.data,
-        animal.attitude_to_cats = form.attitude_to_cats.data,
-        animal.attitude_to_people = form.attitude_to_people.data,
-        animal.character = form.character.data,
-        animal.description = form.description.data,
+        animal.category_id = form.category.data
+        animal.name = form.name.data
+        animal.type_id = form.type.data
+        animal.sex = form.sex.data
+        animal.castration_sterilization = form.castration_sterilization.data
+        animal.age = form.age.data
+        animal.fur = form.fur.data
+        animal.weight = form.weight.data
+        animal.number = form.number.data
+        animal.box = form.box.data
+        animal.attitude_to_dogs = form.attitude_to_dogs.data
+        animal.attitude_to_cats = form.attitude_to_cats.data
+        animal.attitude_to_people = form.attitude_to_people.data
+        animal.character = form.character.data
+        animal.description = form.description.data
         animal.title_img_name = title_img_name
 
         db.session.add(animal)
@@ -258,7 +257,7 @@ def edit_animal(id):
 
         # Zapisywanie plików 
         if form.title_img.data or any(img.filename for img in form.images.data):
-            catalog_path = os.path.join(app.config['UPLOAD_FOLDER'], 'animals', str(animal.animal_id))
+            catalog_path = os.path.join(upload_path, 'animals', str(animal.animal_id))
             os.makedirs(catalog_path, exist_ok=True)
 
             if form.title_img.data:
@@ -275,7 +274,7 @@ def edit_animal(id):
 
         flash("Zapisano zmiany!")
 
-        return redirect(url_for('edit_animal'))
+        return redirect(url_for('edit_animal', id = animal.animal_id))
 
     form.type.data = animal.type_id
     form.category.data = animal.category_id
