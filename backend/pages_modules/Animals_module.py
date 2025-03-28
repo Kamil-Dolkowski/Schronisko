@@ -286,22 +286,21 @@ def edit_animal(id, upload_path):
         else:
             title_img_name = None
         
-        animal.category_id = form.category.data,
-        animal.in_shelter = True,
-        animal.name = form.name.data,
-        animal.type_id = form.type.data, 
-        animal.sex = form.sex.data,
-        animal.castration_sterilization = form.castration_sterilization.data,
-        animal.age = form.age.data,
-        animal.fur = form.fur.data,
-        animal.weight = form.weight.data,
-        animal.number = form.number.data,
-        animal.box = form.box.data,
-        animal.attitude_to_dogs = form.attitude_to_dogs.data,
-        animal.attitude_to_cats = form.attitude_to_cats.data,
-        animal.attitude_to_people = form.attitude_to_people.data,
-        animal.character = form.character.data,
-        animal.description = form.description.data,
+        animal.category_id = form.category.data
+        animal.name = form.name.data
+        animal.type_id = form.type.data
+        animal.sex = form.sex.data
+        animal.castration_sterilization = form.castration_sterilization.data
+        animal.age = form.age.data
+        animal.fur = form.fur.data
+        animal.weight = form.weight.data
+        animal.number = form.number.data
+        animal.box = form.box.data
+        animal.attitude_to_dogs = form.attitude_to_dogs.data
+        animal.attitude_to_cats = form.attitude_to_cats.data
+        animal.attitude_to_people = form.attitude_to_people.data
+        animal.character = form.character.data
+        animal.description = form.description.data
         animal.title_img_name = title_img_name
 
         db.session.add(animal)
@@ -326,7 +325,7 @@ def edit_animal(id, upload_path):
 
         flash("Zapisano zmiany!")
 
-        return redirect(url_for('edit_animal'))
+        return redirect(url_for('edit_animal', id = animal.animal_id))
 
     form.type.data = animal.type_id
     form.category.data = animal.category_id
