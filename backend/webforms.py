@@ -57,3 +57,34 @@ class AnimalMigrateForm(FlaskForm):
     recently_arrived = SubmitField("Niedawno trafiły") 
     to_adoption = SubmitField("Do adopcji") 
     found_home = SubmitField("Znalazły dom")
+
+class AnimalSearch(FlaskForm):
+    sex_options = [
+        (None,'Wszystkie'), 
+        ('samiec','Samiec'), 
+        ('samica','Samica')
+    ]
+    age_options = [
+        (None,'Wszystkie'),
+        (1,'Do 1 roku'),
+        ('wszystkie','1-4 lata'),
+        ('wszystkie','5-9 lat'),
+        ('wszystkie','10 lat i więcej')
+    ]
+    weight_options = [
+        (None,'Wszystkie'),
+        (1,'Do 5 kg'),
+        ('wszystkie','5-14 kg'),
+        ('wszystkie','15-30 kg'),
+        ('wszystkie','31-45 kg'),
+        ('wszystkie','45 kg i więcej')
+    ]
+
+    name_or_number = StringField("Imię lub numer", validators=[Optional()])
+    type = SelectField("Gatunek", choices=[], validators=[Optional()], coerce=int)
+    category = SelectField("Kategoria", choices=[], validators=[Optional()], coerce=int)
+    sex = SelectField("Płeć", choices=sex_options, validators=[Optional()], coerce=lambda x: x == None)
+    age = SelectField("Wiek", choices=age_options, validators=[Optional()], coerce=lambda x: x == None)
+    weight = SelectField("Waga", choices=weight_options, validators=[Optional()], coerce=lambda x: x == None)
+    seniors = BooleanField("Seniorzy")
+    submit = SubmitField("Szukaj")

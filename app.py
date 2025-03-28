@@ -83,7 +83,7 @@ def delete_post(id):
 
 @app.route("/zwierzeta")
 def animals():
-    return render_template("animals/animals.html")
+    return Animals_module.animals()
 
 @app.route("/zwierzeta/usuniete")
 @login_required

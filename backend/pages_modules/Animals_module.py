@@ -1,10 +1,54 @@
 from backend.pages_modules.common_imports import *
 import os
-from backend.webforms import AnimalMigrateForm, AnimalForm
+from backend.webforms import AnimalMigrateForm, AnimalForm, AnimalSearch
 from werkzeug.utils import secure_filename
 import uuid
 
+
 ANIMALS_PER_PAGE = 12
+
+def animals():
+    type_ = request.args.get('type')
+
+    animals = []
+
+    form = AnimalSearch()
+
+    types = Types.query.all()
+    type_choices = []
+    type_choices.append((0, "Wszystkie"))
+    for type in types:
+        type_choices.append((type.type_id, type.name))
+    form.type.choices = type_choices
+
+    categories = Categories.query.all()
+    category_choices = []
+    for category in categories:
+        category_choices.append((category.category_id, category.name))
+    category_choices.append((0, "znalazły dom"))
+    form.category.choices = category_choices
+    form.category.default = 2
+    form.process()
+
+    if form.validate_on_submit():
+
+        animals = db.session.query(
+            Animals.animal_id,
+            Animals.sex,
+            Animals.age,
+            Animals.weight,
+            Animals.number,
+            Animals.box,
+            Animals.title_img_name
+        ).filter(
+            Animals.is_deleted == False,
+            Animals.type_id == form.type.data,
+            Animals.category_id == form.category.data,
+            Animals.in_shelter == True
+        )
+        return render_template("animals/animals.html", form=form, animals=animals)
+
+    return render_template("animals/animals.html", form=form, animals=animals)
 
 def deleted_animals():
     page = request.args.get('page', 1, type=int)

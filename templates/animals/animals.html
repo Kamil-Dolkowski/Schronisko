@@ -2,6 +2,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/animals.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/filtered_search.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -21,5 +22,57 @@
     <a href="{{ url_for('deleted_animals') }}">Usunięte Zwierzęta</a>
 </div>
 {% endif %}
+
+<div class="filtered-search">
+    {{ form.hidden_tag() }}
+
+    {{ form.name_or_number.label }}
+    {{ form.name_or_number }}
+
+    {{ form.type.label }}
+    {{ form.type }}
+
+    {{ form.sex.label }}
+    {{ form.sex }}
+
+    {{ form.age.label }}
+    {{ form.age }}
+
+    {{ form.weight.label }}
+    {{ form.weight }}
+
+    {{ form.category.label }}
+    {{ form.category }}
+
+    {{ form.seniors.label }}
+    {{ form.seniors }}
+
+    <div></div>
+    {{ form.submit() }}
+</div>
+
+<div class="animal-boxes-module">
+    {% for animal in animals %}
+        <a href="{{ url_for('animal', id=animal.animal_id) }}">
+            <div class="animal-box">
+                <div class="animal-box-img">
+                    {% if animal.title_img_name %}
+                        <img src="{{ url_for('static', filename='uploads/animals/' + animal.animal_id |string + '/' + animal.title_img_name) }}" alt="Zdjęcie zwierzęcia.">
+                    {% endif %}
+                </div>
+                <div class="animal-box-description">
+                    {% if animal.name %}
+                        <h3>{{ animal.name }}</h3>
+                        {{ animal.number }}<br/>
+                    {% else %}
+                        <h3>{{ animal.number }}</h3>
+                    {% endif %}
+                    {{ animal.sex }}, {{ animal.age }} lat, {{ animal.weight }} kg<br/>
+                    {{ animal.box }}<br/>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
 
 {% endblock %}
