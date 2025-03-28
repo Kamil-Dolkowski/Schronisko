@@ -23,7 +23,12 @@ def deleted_animals():
 
     animals_page = deleted_animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
     
-    return render_template("animals/deleted_animals.html", animals=animals_page, url_name='deleted_animals')
+    return render_template(
+        "animals/deleted_animals.html", 
+        animals=animals_page, 
+        pages_elements=animals_page, 
+        url_name='deleted_animals'
+    )
 
 def animal(id, upload_folder):
     animal = Animals.query.get_or_404(id)
@@ -98,7 +103,12 @@ def recently_arrived():
 
     animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
 
-    return render_template("animals/recently_arrived.html", animals=animals_page, url_name='recently_arrived')
+    return render_template(
+        "animals/recently_arrived.html", 
+        animals=animals_page, 
+        pages_elements=animals_page, 
+        url_name='recently_arrived'
+    )
 
 def dogs_to_adoption():
     page = request.args.get('page', 1, type=int)
@@ -121,7 +131,12 @@ def dogs_to_adoption():
 
     animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
 
-    return render_template("animals/dogs_to_adoption.html", animals=animals_page, url_name='dogs_to_adoption')
+    return render_template(
+        "animals/dogs_to_adoption.html", 
+        animals=animals_page, 
+        pages_elements=animals_page, 
+        url_name='dogs_to_adoption'
+    )
 
 def cats_to_adoption():
     page = request.args.get('page', 1, type=int)
@@ -144,7 +159,12 @@ def cats_to_adoption():
 
     animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
 
-    return render_template("animals/cats_to_adoption.html", animals=animals_page, url_name='cats_to_adoption')
+    return render_template(
+        "animals/cats_to_adoption.html", 
+        animals=animals_page, 
+        pages_elements=animals_page, 
+        url_name='cats_to_adoption'
+    )
 
 def found_home():
     page = request.args.get('page', 1, type=int)
@@ -165,7 +185,12 @@ def found_home():
 
     animals_page = animals.paginate(page=page, per_page=ANIMALS_PER_PAGE, error_out=True)
 
-    return render_template("animals/found_home.html", animals=animals_page, url_name='found_home')
+    return render_template(
+        "animals/found_home.html", 
+        animals=animals_page, 
+        pages_elements=animals_page, 
+        url_name='found_home'
+    )
 
 def add_animal(upload_path):
     form = AnimalForm()
