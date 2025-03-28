@@ -5,7 +5,11 @@ import uuid
 from flask_login import current_user
 import os
 
+POSTS_PER_PAGE = 5
+
 def posts():
+    page = request.args.get('page', 1, type=int)
+    
     posts = Posts.query.order_by(Posts.post_datetime.desc()).filter(Posts.is_deleted == 'FALSE')
     
     for post in posts:
@@ -33,7 +37,15 @@ def posts():
             post.description = post.description[0:-4] + " ...</p>"
         
         post.description = bleach.clean(post.description, tags={'p','strong','em','s'}, strip=True)
-    return render_template("posts/posts.html", posts=posts)
+    
+    posts_page = posts.paginate(page=page, per_page=POSTS_PER_PAGE, error_out=True)
+    
+    return render_template(
+        "posts/posts.html", 
+        posts=posts_page, 
+        pages_elements=posts_page, 
+        url_name='posts'
+    )
 
 def add_post():
     form = PostForm()

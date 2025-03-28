@@ -1,0 +1,50 @@
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/paging_navbar.css') }}">
+{% endblock %}
+
+<!-- Pasek nawigacji po stronach -->
+<div class="pages-nav">
+    <!-- przycisk "Poprzednia" (strona) -->
+    {% if pages_elements.has_prev %}
+        <a href="{{ url_for(url_name, page=pages_elements.prev_num) }}"
+            class="pages-nav-navigation-button">Poprzednia</a>
+    {% else %}
+        <div class="pages-nav-disabled-element">Poprzednia</div>
+    {% endif %}
+
+    <!-- nr strony: 1 -->
+    <a href="{{ url_for(url_name, page=1) }}" 
+        {% if pages_elements.page == 1 %}class="pages-nav-current-page"{% endif %}>1</a>
+
+    <!-- (...) -->
+    {% if pages_elements.page >= 5 %}
+        <div class="pages-nav-ellipsis">...</div>
+    {% endif %}
+
+    <!-- nr strony: od 2 do (n-1) -->
+    {% for i in range(pages_elements.page-2, pages_elements.page+2 +1) %}
+        {% if i > 1 and i < pages_elements.pages %}
+            <a href="{{ url_for(url_name, page=i) }}"
+                {% if pages_elements.page == i %}class="pages-nav-current-page"{% endif %}>{{ i }}</a>
+        {% endif %}
+    {% endfor %}
+
+    <!-- (...) -->
+    {% if pages_elements.page <= pages_elements.pages-4 %}
+        <div class="pages-nav-ellipsis">...</div>
+    {% endif %}
+
+    <!-- nr strony: n -->
+    {% if pages_elements.pages != 1 %}
+    <a href="{{ url_for(url_name, page=pages_elements.pages) }}"
+        {% if pages_elements.page == pages_elements.pages %}class="pages-nav-current-page"{% endif %}>{{ pages_elements.pages }}</a>
+    {% endif %}
+
+    <!-- przycisk "Następna" (strona) -->
+    {% if pages_elements.has_next %}
+        <a href="{{ url_for(url_name, page=pages_elements.next_num) }}"
+            class="pages-nav-navigation-button">Następna</a>
+    {% else %}
+        <div class="pages-nav-disabled-element">Następna</div>
+    {% endif %}
+</div>
